@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 
 // Child component to display a single todo item
-const TodoItem = ({ todo, onComplete }) => {
+const TodoItem = ({ todo }) => {
   return (
     <div>
       <span>{todo.text}</span>
-      {!todo.completed && (
-        <button onClick={() => onComplete(todo.id)}>Complete</button>
-      )}
     </div>
   );
 };
@@ -36,7 +33,12 @@ const TodoList = () => {
     <div>
       <h1>Todo List</h1>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} onComplete={completeTodo} />
+        <li key={todo.id}>
+          <TodoItem todo={todo} />
+          {!todo.completed && (
+            <button onClick={() => completeTodo(todo.id)}>Complete</button>
+          )}
+        </li>
       ))}
     </div>
   );
