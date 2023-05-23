@@ -1,0 +1,45 @@
+import React, { useState } from 'react';
+
+// Child component to display a single todo item
+const TodoItem = ({ todo, onComplete }) => {
+  return (
+    <div>
+      <span>{todo.text}</span>
+      {!todo.completed && (
+        <button onClick={() => onComplete(todo.id)}>Complete</button>
+      )}
+    </div>
+  );
+};
+
+// Parent component
+const TodoList = () => {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build a todo app', completed: false },
+    { id: 3, text: 'Deploy to production', completed: false }
+  ]);
+
+  // Function to mark a todo item as completed
+  const completeTodo = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: true };
+      }
+      return todo;
+    });
+
+    setTodos(updatedTodos);
+  };
+
+  return (
+    <div>
+      <h1>Todo List</h1>
+      {todos.map((todo) => (
+        <TodoItem key={todo.id} todo={todo} onComplete={completeTodo} />
+      ))}
+    </div>
+  );
+};
+
+export default TodoList;
